@@ -1,5 +1,5 @@
 {
-  "name": "@rodlopez/clean-code",
+  "name": "@rodlopez/etl-postgresql",
   "version": "1.1.12",
   "description": "",
   "keywords": [
@@ -10,10 +10,9 @@
     "start": "rollup -c -w"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/RodLopezDev/rodlopez-clean-code.git"
+    "type": "git"
   },
-  "author": "RatherLabsRodLopez",
+  "author": "RodLopez",
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
