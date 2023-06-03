@@ -1,5 +1,5 @@
 {
-  "name": "etl-postgresql",
+  "name": "@rodlopez/etl-postgresql",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
