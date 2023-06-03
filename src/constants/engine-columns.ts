@@ -7,7 +7,8 @@ interface ColType {
 }
 
 // Source:
-// SELECT id, name FROM pg_type
+// SELECT oid, typname FROM pg_type
+//1184
 const SupportedColumns: ColType[] = [
   {
     id: 16,
@@ -45,6 +46,11 @@ const SupportedColumns: ColType[] = [
     commonType: CommonColumnType.STRING,
   },
   {
+    id: 26,
+    nativeType: "oid",
+    commonType: CommonColumnType.INT,
+  },
+  {
     id: 700,
     nativeType: "float4",
     commonType: CommonColumnType.DOUBLE,
@@ -72,6 +78,11 @@ const SupportedColumns: ColType[] = [
   {
     id: 1114,
     nativeType: "timestamp",
+    commonType: CommonColumnType.TIMESTAMP,
+  },
+  {
+    id: 1184,
+    nativeType: "timestamptz",
     commonType: CommonColumnType.TIMESTAMP,
   },
 ];

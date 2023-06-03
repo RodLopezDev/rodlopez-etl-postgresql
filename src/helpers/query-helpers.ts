@@ -17,7 +17,7 @@ export const QueryResultType = (queryResult: QueryResult<any>): QueryType => {
     DROP: QueryType.DROP,
   };
 
-  const type = Map[queryResult?.command];
+  const type = Map[queryResult.command];
   if (!!type) {
     return type;
   }
@@ -26,7 +26,7 @@ export const QueryResultType = (queryResult: QueryResult<any>): QueryType => {
 };
 
 export const GetColumns = (queryResult: QueryResult<any>): IColumn[] => {
-  const Columns = queryResult.fields?.map((field): IColumn => {
+  const Columns = queryResult.fields.map((field): IColumn => {
     const { name, dataTypeID } = field;
     const colType = SupportedColumns.find((e) => e.id === dataTypeID);
     if (!colType) {

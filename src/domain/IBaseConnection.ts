@@ -1,6 +1,6 @@
 interface IBaseConnection {
   connect(): Promise<boolean>;
-  disconnect(): Promise<boolean | void>;
+  disconnect(): Promise<boolean>;
 }
 
 export default IBaseConnection;

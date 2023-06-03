@@ -5,18 +5,24 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "npx nodemon server/index.ts",
-    "build": "rm -rf ./dist && tsc -p tsconfig.build.json"
+    "build": "rm -rf ./dist && tsc -p tsconfig.build.json",
+    "test": "jest",
+    "test:watch": "jest --watchAll --coverage",
+    "test:web": "open -a \"Google Chrome\" coverage/lcov-report/index.html"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.17.17",
+    "@types/jest": "^29.5.2",
     "@types/node": "20.2.5",
     "@types/pg": "8.10.1",
     "body-parser": "^1.20.2",
     "express": "4.18.2",
+    "jest": "^29.5.0",
     "nodemon": "2.0.22",
+    "ts-jest": "^29.1.0",
     "ts-node": "10.9.1",
     "typescript": "5.1.3"
   },

@@ -44,7 +44,8 @@ class BaseConnection implements IBaseConnection {
     }
 
     try {
-      return this.poolClient.release();
+      this.poolClient.release();
+      return true
     } catch (e) {
       return false;
     }
