@@ -1,5 +1,5 @@
 {
-  "name": "pov-library",
+  "name": "@etl/plugin-postgresql",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
