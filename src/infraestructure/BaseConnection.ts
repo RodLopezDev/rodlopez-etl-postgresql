@@ -1,0 +1,54 @@
+import { Pool, PoolClient } from "pg";
+
+import PgException from "../domain/PgException";
+import IBaseConnection from "../domain/IBaseConnection";
+
+import { ALREADY_CONNECTED, ERROR_NOT_CONNECTED } from "../constants/errors";
+
+class BaseConnection implements IBaseConnection {
+  protected client: Pool;
+  protected poolClient: PoolClient | undefined;
+
+  constructor(
+    host: string,
+    port: number,
+    database: string,
+    user: string,
+    password: string
+  ) {
+    this.client = new Pool({
+      host,
+      port,
+      database,
+      user,
+      password,
+    });
+  }
+
+  async connect() {
+    if (!!this.poolClient) {
+      throw new PgException(ALREADY_CONNECTED, "", "");
+    }
+
+    try {
+      this.poolClient = await this.client.connect();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  async disconnect() {
+    if (!this.poolClient) {
+      throw new PgException(ERROR_NOT_CONNECTED, "", "");
+    }
+
+    try {
+      return this.poolClient.release();
+    } catch (e) {
+      return false;
+    }
+  }
+}
+
+export default BaseConnection;
