@@ -1,4 +1,4 @@
-import { QueryResult } from "pg";
+import { Client, QueryResult } from "pg";
 
 import BaseConnection from "./BaseConnection";
 
@@ -23,6 +23,7 @@ class PgConnection extends BaseConnection implements IConnection {
     try {
       queryResult = await this.poolClient.query(query);
     } catch (e: any) {
+      console.log(e?.message);
       throw new PgException(QUERY_NOT_PROCESSED, e?.message, String(e));
     }
     if (!queryResult) {
@@ -62,6 +63,41 @@ class PgConnection extends BaseConnection implements IConnection {
     }
 
     throw new PgException("", "", "");
+  }
+
+  async fill(
+    schema: string,
+    table: string,
+    data: Record<string, any>[]
+  ): Promise<IQueryResult[]> {
+    if (!this.poolClient) {
+      throw new PgException(ERROR_NOT_CONNECTED, "", "");
+    }
+
+    const query = `INSERT INTO ${schema}.${table} ({{COLUMNS}}) VALUES ({{VALUES}});`;
+
+    const rowString = data?.map((item) => {
+      const keys = Object.keys(item);
+      const keysChain = keys.join(", ");
+
+      const values = keys.map((key) => {
+        const value = item[key];
+        return Number.isNaN(Number(value)) ? `'${value}'` : Number(value);
+      });
+      const valuesChain = values.join(", ");
+
+      const finalQuery = query
+        .replace("{{COLUMNS}}", keysChain)
+        .replace("{{VALUES}}", valuesChain);
+
+      return finalQuery.replace("\n", "");
+    });
+
+    const promisesAll = await Promise.all(
+      rowString.map((row) => this.query(row))
+    );
+
+    return promisesAll;
   }
 }
 

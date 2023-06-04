@@ -1,4 +1,4 @@
-.jest
+.jest/setEnvVars.js
 node_modules
 dist
 coverage
