@@ -1,4 +1,4 @@
-import { Client, QueryResult } from "pg";
+import { QueryResult } from "pg";
 
 import BaseConnection from "./BaseConnection";
 
