@@ -6,6 +6,10 @@ class PgException extends Error {
     this.detail = detail;
     this.coreDetail = coreDetail;
   }
+
+  toString() {
+    return `${this.message}, ${this.detail}, ${this.coreDetail}`;
+  }
 }
 
 export default PgException;

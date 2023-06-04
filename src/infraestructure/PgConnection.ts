@@ -23,6 +23,7 @@ class PgConnection extends BaseConnection implements IConnection {
     try {
       queryResult = await this.poolClient.query(query);
     } catch (e: any) {
+      console.log(e?.message);
       throw new PgException(QUERY_NOT_PROCESSED, e?.message, String(e));
     }
     if (!queryResult) {
@@ -68,7 +69,7 @@ class PgConnection extends BaseConnection implements IConnection {
     schema: string,
     table: string,
     data: Record<string, any>[]
-  ): Promise<any> {
+  ): Promise<IQueryResult[]> {
     if (!this.poolClient) {
       throw new PgException(ERROR_NOT_CONNECTED, "", "");
     }

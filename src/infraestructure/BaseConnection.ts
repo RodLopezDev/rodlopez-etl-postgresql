@@ -30,12 +30,8 @@ class BaseConnection implements IBaseConnection {
       throw new PgException(ALREADY_CONNECTED, "", "");
     }
 
-    try {
-      this.poolClient = await this.client.connect();
-      return true;
-    } catch (e) {
-      return false;
-    }
+    this.poolClient = await this.client.connect();
+    return true;
   }
 
   async disconnect() {
@@ -43,12 +39,8 @@ class BaseConnection implements IBaseConnection {
       throw new PgException(ERROR_NOT_CONNECTED, "", "");
     }
 
-    try {
-      this.poolClient.release();
-      return true
-    } catch (e) {
-      return false;
-    }
+    this.poolClient.release();
+    return true;
   }
 }
 
