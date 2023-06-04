@@ -8,6 +8,7 @@ import PingUseCase from "./use-cases/1-ping-use-case";
 import QueryUseCase from "./use-cases/2-query-use-case";
 import GetTablesUseCase from "./use-cases/3-get-tables-use-case";
 import GetColumnsUseCase from "./use-cases/4-get-columns-use-case";
+import FillUseCase from "./use-cases/5-fill-use-case";
 
 const app = express();
 app.use(bodyParser.json());
@@ -109,6 +110,40 @@ app.post("/columns", async (req: Request, res: Response) => {
       DB_USER,
       DB_PASSWORD,
       DB_TABLE
+    );
+    return res.json(result);
+  } catch (e: any) {
+    if (e instanceof PgException) {
+      console.log("CASE A");
+      return res.status(200).json({ error: e?.message, ...e });
+    }
+    console.log("CASE B");
+    return res.status(500).json({ error: e?.message, ...e });
+  }
+});
+
+app.post("/fill", async (req: Request, res: Response) => {
+  try {
+    const DB_HOST = getString(req.body, "host");
+    const DB_PORT = getNumber(req.body, "port" || 0);
+    const DB_NAME = getString(req.body, "database");
+    const DB_USER = getString(req.body, "user");
+    const DB_PASSWORD = getString(req.body, "password");
+    const DB_SCHEMA = getString(req.body, "schema");
+    const DB_TABLE = getString(req.body, "table");
+    const DB_DATA = req.body?.data;
+
+    console.log(DB_DATA);
+
+    const result = await FillUseCase(
+      DB_HOST,
+      DB_PORT,
+      DB_NAME,
+      DB_USER,
+      DB_PASSWORD,
+      DB_SCHEMA,
+      DB_TABLE,
+      DB_DATA
     );
     return res.json(result);
   } catch (e: any) {
