@@ -2,18 +2,19 @@ import PgConnection from "./PgConnection";
 
 import IObjects from "../domain/IObjects";
 import PgException from "../domain/PgException";
+import { SelectType } from "../domain/IQueryResult";
 
-import { getColumnsQuery, getTablesQuery } from "../constants/core-queries";
 import {
   BAD_FORMAT_QUERY,
-  ERROR_NOT_CONNECTED,
   OBJECT_NOT_FOUND,
+  ERROR_NOT_CONNECTED,
 } from "../constants/errors";
+import { getColumnsQuery, getTablesQuery } from "../constants/core-queries";
 
 class PgObjects implements IObjects {
   constructor(private readonly pgConnection: PgConnection) {}
 
-  async getTables() {
+  async getTables(): Promise<SelectType> {
     const connected = await this.pgConnection.connect();
     if (!connected) {
       throw new PgException(ERROR_NOT_CONNECTED, "", "");
