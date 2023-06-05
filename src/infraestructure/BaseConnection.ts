@@ -42,6 +42,16 @@ class BaseConnection implements IBaseConnection {
     this.poolClient.release();
     return true;
   }
+
+  async ping() {
+    if (!!this.poolClient) {
+      return true;
+    }
+
+    const connect = await this.connect();
+    await this.disconnect();
+    return connect;
+  }
 }
 
 export default BaseConnection;
