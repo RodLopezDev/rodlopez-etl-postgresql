@@ -60,10 +60,9 @@ app.post("/query", async (req: Request, res: Response) => {
     return res.json(result);
   } catch (e: any) {
     if (e instanceof PgException) {
-      console.log("CASE A");
       return res.status(200).json({ error: e?.message, ...e });
     }
-    console.log("CASE B");
+
     return res.status(500).json({ error: e?.message, ...e });
   }
 });
@@ -86,10 +85,9 @@ app.post("/tables", async (req: Request, res: Response) => {
     return res.json(result);
   } catch (e: any) {
     if (e instanceof PgException) {
-      console.log("CASE A");
       return res.status(200).json({ error: e?.message, ...e });
     }
-    console.log("CASE B");
+
     return res.status(500).json({ error: e?.message, ...e });
   }
 });
@@ -114,10 +112,9 @@ app.post("/columns", async (req: Request, res: Response) => {
     return res.json(result);
   } catch (e: any) {
     if (e instanceof PgException) {
-      console.log("CASE A");
       return res.status(200).json({ error: e?.message, ...e });
     }
-    console.log("CASE B");
+
     return res.status(500).json({ error: e?.message, ...e });
   }
 });
@@ -133,8 +130,6 @@ app.post("/fill", async (req: Request, res: Response) => {
     const DB_TABLE = getString(req.body, "table");
     const DB_DATA = req.body?.data;
 
-    console.log(DB_DATA);
-
     const result = await FillUseCase(
       DB_HOST,
       DB_PORT,
@@ -148,14 +143,11 @@ app.post("/fill", async (req: Request, res: Response) => {
     return res.json(result);
   } catch (e: any) {
     if (e instanceof PgException) {
-      console.log("CASE A");
       return res.status(200).json({ error: e?.message, ...e });
     }
-    console.log("CASE B");
+
     return res.status(500).json({ error: e?.message, ...e });
   }
 });
 
-app.listen(port, () => {
-  console.log(`PORT: ${port}`);
-});
+app.listen(port, () => {});

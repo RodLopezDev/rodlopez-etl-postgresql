@@ -14,13 +14,13 @@ import { getColumnsQuery, getTablesQuery } from "../constants/core-queries";
 class PgObjects implements IObjects {
   constructor(private readonly pgConnection: PgConnection) {}
 
-  async getTables(): Promise<SelectType> {
+  async getTables(schema = "public"): Promise<SelectType> {
     const connected = await this.pgConnection.connect();
     if (!connected) {
       throw new PgException(ERROR_NOT_CONNECTED, "", "");
     }
 
-    const result = await this.pgConnection.query(getTablesQuery());
+    const result = await this.pgConnection.query(getTablesQuery(schema));
     if (!result.isSelect) {
       throw new PgException(BAD_FORMAT_QUERY, "", "");
     }

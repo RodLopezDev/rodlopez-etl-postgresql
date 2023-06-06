@@ -23,7 +23,6 @@ class PgConnection extends BaseConnection implements IConnection {
     try {
       queryResult = await this.poolClient.query(query);
     } catch (e: any) {
-      console.log(e?.message);
       throw new PgException(QUERY_NOT_PROCESSED, e?.message, String(e));
     }
     if (!queryResult) {

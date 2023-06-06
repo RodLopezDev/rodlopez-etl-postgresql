@@ -1,7 +1,7 @@
 import { SelectType } from "./IQueryResult";
 
 interface IObjects {
-  getTables(): Promise<SelectType>;
+  getTables(schema?: string): Promise<SelectType>;
   getColumns(table: string): Promise<SelectType>;
 }
 
