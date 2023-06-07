@@ -48,9 +48,15 @@ class BaseConnection implements IBaseConnection {
       return true;
     }
 
-    const connect = await this.connect();
-    await this.disconnect();
-    return connect;
+    try {
+      const connect = await this.connect();
+      if (!!connect) {
+        await this.disconnect();
+      }
+      return connect;
+    } catch (e) {
+      return false;
+    }
   }
 }
 
